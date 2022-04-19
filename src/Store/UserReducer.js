@@ -10,7 +10,7 @@ const ACTIONS = {
 
 const defaultState = { };
 
-export const userReducer = (state = defaultState, action) => {
+export const userReducer = (state = defaultState, action = '') => {
   switch (action.type) {
     case ACTIONS.SET_USER: {
       return { ...state, user: action.payload };

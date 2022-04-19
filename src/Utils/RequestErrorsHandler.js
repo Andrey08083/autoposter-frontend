@@ -3,7 +3,6 @@ export default function requestErrorsHandler(error) {
     if (error.response.data.errors) {
       throw error.response.data.errors;
     }
-  } else {
-    throw ['Unhandled error'];
   }
+  throw error;
 }

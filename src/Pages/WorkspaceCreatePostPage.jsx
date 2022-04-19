@@ -52,8 +52,7 @@ function WorkspaceCreatePostPage() {
       return;
     }
     sendTelegramPostToSelectedChannel(selectedChannelId, editorValue)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         const selectedChannelName = channels
           .find((channel) => channel.id === selectedChannelId).title;
 
@@ -62,7 +61,6 @@ function WorkspaceCreatePostPage() {
         setShowAlert(true);
       })
       .catch((error) => {
-        console.log(error);
         setAlertSeverity('error');
         setAlertContent(error.response.data.errors.join(', '));
         setShowAlert(true);

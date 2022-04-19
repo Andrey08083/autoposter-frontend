@@ -9,6 +9,11 @@ function ResponsiveAppBar() {
     <AppBar position="static" style={{ flexDirection: 'row' }}>
       <Toolbar style={{ flex: 1 }}>
         <Button>
+          <Link to="/workspace" style={{ textDecoration: 'none' }}>
+            <Typography color="white">Workspace</Typography>
+          </Link>
+        </Button>
+        <Button>
           <Link to="/workspace/create" style={{ textDecoration: 'none' }}>
             <Typography color="white">Create post</Typography>
           </Link>

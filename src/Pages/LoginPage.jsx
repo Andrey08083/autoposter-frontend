@@ -3,7 +3,7 @@ import { Button, TextField } from '@mui/material';
 import { Navigate } from 'react-router-dom';
 import FlexColumnDiv from '../Components/FlexColumnDiv';
 import FlexColumnDiv100 from '../Components/FlexColumnDiv100';
-import { handleAPIRequest, handleTextChange } from '../Utils/HookChangeHandlers';
+import { handleTextChange } from '../Utils/HookChangeHandlers';
 import { loginUserRequest } from '../API/UserApi';
 import ErrorParagraph from '../Components/ErrorParagraph';
 import { signInAction } from '../Store/UserReducer';
@@ -20,24 +20,21 @@ function LoginPage() {
         <TextField label="Password" type="password" value={password} onChange={handleTextChange(setPassword)} />
         <Button
           onClick={() => {
-            handleAPIRequest(loginUserRequest, { email, password })
+            loginUserRequest({ email, password })
               .then(({ data }) => {
                 setLoginErrors([]);
                 store.dispatch(signInAction(data));
               })
-              .catch((rej) => setLoginErrors(rej));
+              .catch((error) => setLoginErrors(error.response.data.errors));
           }}
         >
           Login
         </Button>
-        {loginErrors instanceof Array && !loginErrors.length ? (
-          <Navigate to="/workspace" />
-        )
-          : (
-            loginErrors !== undefined
-              ? loginErrors.map((error) => <ErrorParagraph>{error}</ErrorParagraph>)
-              : ''
-          )}
+        {loginErrors instanceof Array && !loginErrors.length && <Navigate to="/workspace" />}
+
+        {loginErrors instanceof Array
+          && loginErrors.length
+          && loginErrors.map((error) => <ErrorParagraph>{error}</ErrorParagraph>)}
 
       </FlexColumnDiv>
     </FlexColumnDiv100>

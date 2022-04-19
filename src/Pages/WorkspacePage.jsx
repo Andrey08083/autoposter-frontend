@@ -8,7 +8,7 @@ function WorkspacePage() {
     <FlexColumnDiv100>
       <ResponsiveAppBar />
       <FlexColumnDiv>
-        ABOBA
+        Hello :)
       </FlexColumnDiv>
     </FlexColumnDiv100>
   );

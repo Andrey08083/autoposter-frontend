@@ -15,6 +15,10 @@ export async function getTelegramPosts() {
   return requestInstanceWithToken.get(`${WORKSPACE.WORKSPACE_ROUTER}${TELEGRAM.TELEGRAM_ROUTER}${POSTS.POSTS_ROUTER}/`);
 }
 
+export async function removeTelegramChannel(telegramChannelId) {
+  return requestInstanceWithToken.delete(`${WORKSPACE.WORKSPACE_ROUTER}${TELEGRAM.TELEGRAM_ROUTER}/${telegramChannelId}`);
+}
+
 export async function sendTelegramPostToSelectedChannel(channelId, postText) {
   return requestInstanceWithToken.post(
     `${WORKSPACE.WORKSPACE_ROUTER}${TELEGRAM.TELEGRAM_ROUTER}${POSTS.POSTS_ROUTER}${POSTS.SEND_POST}`,

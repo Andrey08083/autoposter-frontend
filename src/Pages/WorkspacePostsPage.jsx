@@ -17,7 +17,7 @@ function WorkspacePostsPage() {
       <ResponsiveAppBar />
       <FlexColumnDiv>
         {posts.map((post) => (
-          <PostBlock post={post} />
+          <PostBlock channel={post} />
         ))}
       </FlexColumnDiv>
     </FlexColumnDiv100>

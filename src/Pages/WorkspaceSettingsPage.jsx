@@ -4,8 +4,12 @@ import { Alert, Button } from '@mui/material';
 import FlexColumnDiv100 from '../Components/FlexColumnDiv100';
 import ResponsiveAppBar from '../Components/ResponsiveAppBar';
 import FlexColumnDiv from '../Components/FlexColumnDiv';
-import FlexColumnDefaultDiv from '../Components/FlexColumnDefaultDiv';
-import { getTelegramChannelsByUserId, getTelegramConnectToken } from '../API/WorkspaceApi';
+import {
+  getTelegramChannelsByUserId,
+  getTelegramConnectToken,
+  removeTelegramChannel,
+} from '../API/WorkspaceApi';
+import ChannelBlock from '../Components/ChannelBlock';
 
 function WorkspaceSettingsPage() {
   const [channels, setChannels] = useState([]);
@@ -25,6 +29,13 @@ function WorkspaceSettingsPage() {
     setShowAlert(true);
   };
 
+  const onChannelRemoveClickHandler = (telegramChannelId) => {
+    removeTelegramChannel(telegramChannelId)
+      .then(() => {
+        setChannels(channels.filter(({ id }) => id !== telegramChannelId));
+      });
+  };
+
   return (
     <FlexColumnDiv100>
       <ResponsiveAppBar />
@@ -41,7 +52,12 @@ function WorkspaceSettingsPage() {
         )}
       <FlexColumnDiv>
         Connected channels:
-        {channels.map((channel) => <FlexColumnDefaultDiv>{channel.title}</FlexColumnDefaultDiv>)}
+        {channels.map((channel) => (
+          <ChannelBlock
+            channel={channel}
+            onRemoveClick={onChannelRemoveClickHandler}
+          />
+        ))}
         <Button onClick={handleTelegramAccountConnect}>Connect telegram account</Button>
       </FlexColumnDiv>
     </FlexColumnDiv100>

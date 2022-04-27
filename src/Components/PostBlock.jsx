@@ -11,12 +11,12 @@ const FlexPostDiv = styled.div`
   border: 1px solid rgb(0, 0, 0);
 `;
 
-function PostBlock({ post }) {
+function PostBlock({ channel }) {
   return (
     <FlexPostDiv>
-      <p>Channel name: {post.title}</p>
+      <p>Channel name: {channel.title}</p>
 
-      <p>Post text: {post.text}</p>
+      <p>Post text: {channel.text}</p>
     </FlexPostDiv>
   );
 }

@@ -1,22 +1,38 @@
 import React, { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
 import { Editor } from '@tinymce/tinymce-react';
 import {
   Alert,
   Button,
   MenuItem,
   Select,
+  TextField,
 } from '@mui/material';
-
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import FlexColumnDiv100 from '../Components/FlexColumnDiv100';
 import ResponsiveAppBar from '../Components/ResponsiveAppBar';
 import FlexColumnDiv from '../Components/FlexColumnDiv';
 import {
   getTelegramChannelsByUserId,
   sendTelegramPostToSelectedChannel,
+  scheduleTelegramPostToSelectedChannel,
 } from '../API/WorkspaceApi';
 import { handleTextChange } from '../Utils/HookChangeHandlers';
 import ButtonItem from '../Components/ButtonItem';
 import AddButtonDialog from '../Components/AddButtonDialog';
+import FlexRowDiv from '../Components/FlexRowDiv';
+
+dayjs.extend(utc);
+
+const transformDateToUtcTimeStamp = (dayJsObject) => (
+  dayjs(dayJsObject)
+    .utc(false)
+    .second(0)
+    .millisecond(0)
+    .valueOf());
 
 function WorkspaceCreatePostPage() {
   const [showAlert, setShowAlert] = useState(false);
@@ -29,6 +45,7 @@ function WorkspaceCreatePostPage() {
   const [channels, setChannels] = useState([]);
 
   const [buttons, setButtons] = useState([]);
+  const [dateAndTime, setDateAndTime] = useState(dayjs());
   const [open, setOpen] = useState(false);
 
   const handleOpenDialog = () => {
@@ -82,6 +99,34 @@ function WorkspaceCreatePostPage() {
 
         setAlertSeverity('success');
         setAlertContent(`Your post was successfully sent to ${selectedChannelName} channel`);
+        setShowAlert(true);
+      })
+      .catch((error) => {
+        setAlertSeverity('error');
+        setAlertContent(error.response.data.errors.join(', '));
+        setShowAlert(true);
+      });
+  };
+
+  const handlePostSchedule = () => {
+    if (!selectedChannelId) {
+      setAlertSeverity('error');
+      setAlertContent('Please select Telegram channel first');
+      setShowAlert(true);
+      return;
+    }
+    scheduleTelegramPostToSelectedChannel(
+      selectedChannelId,
+      editorValue,
+      buttons,
+      transformDateToUtcTimeStamp(dateAndTime),
+    )
+      .then(() => {
+        const selectedChannelName = channels
+          .find((channel) => channel.id === selectedChannelId).title;
+
+        setAlertSeverity('success');
+        setAlertContent(`Your post was successfully scheduled to ${selectedChannelName} channel`);
         setShowAlert(true);
       })
       .catch((error) => {
@@ -152,14 +197,34 @@ function WorkspaceCreatePostPage() {
             />
           ))}
         </div>
-        <p>Select Telegram channel from dropdown below</p>
-        <Select
-          defaultValue=""
-          onChange={handleTextChange(setSelectedChannelId)}
-        >
-          {channels.map((channel) => <MenuItem value={channel.id}>{channel.title}</MenuItem>)}
-        </Select>
-        <Button onClick={handlePostSending}>Post in selected channel</Button>
+        <FlexRowDiv>
+          <p>Select Telegram channel from dropdown:</p>
+          <Select
+            defaultValue=""
+            onChange={handleTextChange(setSelectedChannelId)}
+          >
+            {channels.map((channel) => <MenuItem value={channel.id}>{channel.title}</MenuItem>)}
+          </Select>
+        </FlexRowDiv>
+
+        <FlexRowDiv>
+          <p>Set date for post:</p>
+          <LocalizationProvider
+            dateAdapter={AdapterDayjs}
+          >
+            <DateTimePicker
+              value={dateAndTime}
+              onChange={setDateAndTime}
+              renderInput={(props) => <TextField {...props} />}
+            />
+          </LocalizationProvider>
+        </FlexRowDiv>
+
+        <FlexRowDiv>
+          <Button onClick={handlePostSending}>Post in selected channel</Button>
+          <p>or</p>
+          <Button onClick={handlePostSchedule}>Schedule in selected channel</Button>
+        </FlexRowDiv>
       </FlexColumnDiv>
     </FlexColumnDiv100>
   );

@@ -21,6 +21,7 @@ export default {
   POSTS: {
     POSTS_ROUTER: '/posts',
     SEND_POST: '/sendPost',
+    SCHEDULE_POST: '/schedule',
   },
   MAIL: {
     MAIL_ROUTER: '/mail',

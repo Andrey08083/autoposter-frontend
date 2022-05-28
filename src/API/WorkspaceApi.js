@@ -25,3 +25,15 @@ export async function sendTelegramPostToSelectedChannel(channelId, postText, but
     { channelId, postText, buttons },
   );
 }
+
+export async function scheduleTelegramPostToSelectedChannel(channelId, postText, buttons, sendAt) {
+  return requestInstanceWithToken.post(
+    `${WORKSPACE.WORKSPACE_ROUTER}${TELEGRAM.TELEGRAM_ROUTER}${POSTS.POSTS_ROUTER}${POSTS.SCHEDULE_POST}`,
+    {
+      channelId,
+      postText,
+      buttons,
+      sendAt,
+    },
+  );
+}

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import {
-  Alert, Button, MenuItem, Select,
+  Alert,
+  Button,
+  MenuItem,
+  Select,
 } from '@mui/material';
 
 import FlexColumnDiv100 from '../Components/FlexColumnDiv100';
@@ -12,6 +15,8 @@ import {
   sendTelegramPostToSelectedChannel,
 } from '../API/WorkspaceApi';
 import { handleTextChange } from '../Utils/HookChangeHandlers';
+import ButtonItem from '../Components/ButtonItem';
+import AddButtonDialog from '../Components/AddButtonDialog';
 
 function WorkspaceCreatePostPage() {
   const [showAlert, setShowAlert] = useState(false);
@@ -20,8 +25,19 @@ function WorkspaceCreatePostPage() {
 
   const [editorValue, setEditorValue] = useState('');
 
-  const [channels, setChannels] = useState([]);
   const [selectedChannelId, setSelectedChannelId] = useState('');
+  const [channels, setChannels] = useState([]);
+
+  const [buttons, setButtons] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const handleOpenDialog = () => {
+    setOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
 
   const sizeLimit = 1000;
 
@@ -35,6 +51,14 @@ function WorkspaceCreatePostPage() {
     if (length <= sizeLimit) {
       setEditorValue(value);
     }
+  };
+
+  const handleRemoveButton = (text) => {
+    setButtons(buttons.filter((button) => button.text !== text));
+  };
+
+  const handleAddButton = (button) => {
+    setButtons([...buttons, button]);
   };
 
   const handleBeforeAddUndo = (evt, editor) => {
@@ -51,7 +75,7 @@ function WorkspaceCreatePostPage() {
       setShowAlert(true);
       return;
     }
-    sendTelegramPostToSelectedChannel(selectedChannelId, editorValue)
+    sendTelegramPostToSelectedChannel(selectedChannelId, editorValue, buttons)
       .then(() => {
         const selectedChannelName = channels
           .find((channel) => channel.id === selectedChannelId).title;
@@ -93,7 +117,10 @@ function WorkspaceCreatePostPage() {
             selector: 'textarea',
             inline_styles: false,
             formats: {
-              underline: { inline: 'u', exact: true },
+              underline: {
+                inline: 'u',
+                exact: true,
+              },
             },
             entity_encoding: 'raw',
             force_br_newlines: false,
@@ -110,6 +137,21 @@ function WorkspaceCreatePostPage() {
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
           }}
         />
+        <Button onClick={handleOpenDialog}>Add Button to Telegram post</Button>
+        <AddButtonDialog
+          open={open}
+          onClose={handleCloseDialog}
+          onAdd={handleAddButton}
+        />
+        <div>
+          {buttons.map((button, index) => (
+            <ButtonItem
+              id={index}
+              button={button}
+              onRemoveClick={handleRemoveButton}
+            />
+          ))}
+        </div>
         <p>Select Telegram channel from dropdown below</p>
         <Select
           defaultValue=""

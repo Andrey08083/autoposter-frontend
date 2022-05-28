@@ -11,13 +11,13 @@ const FlexChannelDiv = styled.div`
   border: 1px solid rgb(0, 0, 0);
 `;
 
-function ChannelBlock({ channel, onRemoveClick }) {
+function ChannelBlock({ button, onRemoveClick }) {
   return (
     <FlexChannelDiv>
-      <p>Channel name: {channel.title}</p>
+      <p>Channel name: {button.title}</p>
 
-      <p>Channel ID: {channel.id}</p>
-      <Button onClick={() => onRemoveClick(channel.id)}>Remove channel</Button>
+      <p>Channel ID: {button.id}</p>
+      <Button onClick={() => onRemoveClick(button.id)}>Remove channel</Button>
     </FlexChannelDiv>
   );
 }

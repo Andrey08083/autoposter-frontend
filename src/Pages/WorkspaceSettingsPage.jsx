@@ -54,7 +54,7 @@ function WorkspaceSettingsPage() {
         Connected channels:
         {channels.map((channel) => (
           <ChannelBlock
-            channel={channel}
+            button={channel}
             onRemoveClick={onChannelRemoveClickHandler}
           />
         ))}

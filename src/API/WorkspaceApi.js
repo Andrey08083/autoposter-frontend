@@ -19,9 +19,9 @@ export async function removeTelegramChannel(telegramChannelId) {
   return requestInstanceWithToken.delete(`${WORKSPACE.WORKSPACE_ROUTER}${TELEGRAM.TELEGRAM_ROUTER}/${telegramChannelId}`);
 }
 
-export async function sendTelegramPostToSelectedChannel(channelId, postText) {
+export async function sendTelegramPostToSelectedChannel(channelId, postText, buttons) {
   return requestInstanceWithToken.post(
     `${WORKSPACE.WORKSPACE_ROUTER}${TELEGRAM.TELEGRAM_ROUTER}${POSTS.POSTS_ROUTER}${POSTS.SEND_POST}`,
-    { channelId, postText },
+    { channelId, postText, buttons },
   );
 }

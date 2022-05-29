@@ -6,17 +6,19 @@ const FlexPostDiv = styled.div`
   flex-direction: column;
   gap: 10px;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
   border: 1px solid rgb(0, 0, 0);
 `;
 
-function PostBlock({ channel }) {
+function PostBlock({ post }) {
   return (
     <FlexPostDiv>
-      <p>Channel name: {channel.title}</p>
+      <p>Channel name: {post.title}</p>
+      <p>Status: {post.status}</p>
+      <p>Post text:</p>
 
-      <p>Post text: {channel.text}</p>
+      <div dangerouslySetInnerHTML={{ __html: post.text.replace(/\n/g, '<br>') }} />
     </FlexPostDiv>
   );
 }

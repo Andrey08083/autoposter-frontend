@@ -21,7 +21,7 @@ import {
   scheduleTelegramPostToSelectedChannel,
 } from '../API/WorkspaceApi';
 import { handleTextChange } from '../Utils/HookChangeHandlers';
-import ButtonItem from '../Components/ButtonItem';
+import ButtonBlock from '../Components/ButtonBlock';
 import AddButtonDialog from '../Components/AddButtonDialog';
 import FlexRowDiv from '../Components/FlexRowDiv';
 
@@ -190,7 +190,7 @@ function WorkspaceCreatePostPage() {
         />
         <div>
           {buttons.map((button, index) => (
-            <ButtonItem
+            <ButtonBlock
               id={index}
               button={button}
               onRemoveClick={handleRemoveButton}

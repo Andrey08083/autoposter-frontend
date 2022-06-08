@@ -11,7 +11,7 @@ const FlexButtonDiv = styled.div`
   border: 1px solid rgb(0, 0, 0);
 `;
 
-function ButtonItem({ button, onRemoveClick }) {
+function ButtonBlock({ button, onRemoveClick }) {
   return (
     <FlexButtonDiv>
       <p>Text: {button.text}</p>
@@ -22,4 +22,4 @@ function ButtonItem({ button, onRemoveClick }) {
   );
 }
 
-export default ButtonItem;
+export default ButtonBlock;

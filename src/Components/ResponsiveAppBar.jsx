@@ -1,6 +1,9 @@
 import React from 'react';
 import {
-  AppBar, Button, Toolbar, Typography,
+  AppBar,
+  Button,
+  Toolbar,
+  Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 
@@ -8,6 +11,11 @@ function ResponsiveAppBar() {
   return (
     <AppBar position="static" style={{ flexDirection: 'row' }}>
       <Toolbar style={{ flex: 1 }}>
+        <Button>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Typography color="white">Home Page</Typography>
+          </Link>
+        </Button>
         <Button>
           <Link to="/workspace" style={{ textDecoration: 'none' }}>
             <Typography color="white">Workspace</Typography>

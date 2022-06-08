@@ -26,6 +26,18 @@ export async function sendTelegramPostToSelectedChannel(channelId, postText, but
   );
 }
 
+export async function sendTelegramPostById(postId) {
+  return requestInstanceWithToken.post(
+    `${WORKSPACE.WORKSPACE_ROUTER}${TELEGRAM.TELEGRAM_ROUTER}${POSTS.POSTS_ROUTER}/${postId}${POSTS.SEND_POST_BY_ID}`,
+  );
+}
+
+export async function deleteTelegramPostById(postId) {
+  return requestInstanceWithToken.delete(
+    `${WORKSPACE.WORKSPACE_ROUTER}${TELEGRAM.TELEGRAM_ROUTER}${POSTS.POSTS_ROUTER}${POSTS.DELETE_POST_BY_ID}${postId}`,
+  );
+}
+
 export async function scheduleTelegramPostToSelectedChannel(channelId, postText, buttons, sendAt) {
   return requestInstanceWithToken.post(
     `${WORKSPACE.WORKSPACE_ROUTER}${TELEGRAM.TELEGRAM_ROUTER}${POSTS.POSTS_ROUTER}${POSTS.SCHEDULE_POST}`,

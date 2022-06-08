@@ -8,6 +8,8 @@ import PostBlock from '../Components/PostBlock';
 function WorkspacePostsPage() {
   const [posts, setPosts] = useState([]);
 
+  const deletePostById = (postId) => setPosts(posts.filter((post) => post._id !== postId));
+
   useEffect(() => {
     getTelegramPosts()
       .then(({ data }) => setPosts(data));
@@ -17,7 +19,7 @@ function WorkspacePostsPage() {
       <ResponsiveAppBar />
       <FlexColumnDiv>
         {posts.map((post) => (
-          <PostBlock post={post} />
+          <PostBlock onDelete={deletePostById} post={post} />
         ))}
       </FlexColumnDiv>
     </FlexColumnDiv100>

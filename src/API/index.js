@@ -60,7 +60,6 @@ requestInstanceWithToken.interceptors.response.use(
       console.log('error.response.status', error.response.status);
       try {
         const refreshTokenResult = await refreshUserToken();
-        console.log('refreshTokenResult', refreshTokenResult);
         if (!refreshTokenResult) {
           store.dispatch(cleanStoreAction());
           window.location.href = '/';

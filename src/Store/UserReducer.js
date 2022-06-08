@@ -41,11 +41,7 @@ export const userReducer = (state = defaultState, action = '') => {
   }
 };
 
-export const setUserAction = (payload) => ({ type: ACTIONS.SET_USER, payload });
-
 export const updateTokensAction = (payload) => ({ type: ACTIONS.UPDATE_TOKENS, payload });
-
-export const removeUserAction = () => ({ type: ACTIONS.REMOVE_USER, payload: null });
 
 export const cleanStoreAction = () => ({ type: ACTIONS.CLEAN_STORE, payload: {} });
 

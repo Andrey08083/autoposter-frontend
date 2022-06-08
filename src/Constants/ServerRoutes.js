@@ -3,7 +3,7 @@ export default {
     USER_ROUTER: '/user',
     REGISTRATION: '/register',
     LOGIN: '/login',
-    LOGOUT_USER: '/logout',
+    LOGOUT: '/logout',
     REFRESH_USER_TOKEN: '/refresh',
     GET_USER: '/',
     UPDATE_USER: '/update',
@@ -22,10 +22,13 @@ export default {
     POSTS_ROUTER: '/posts',
     SEND_POST: '/sendPost',
     SCHEDULE_POST: '/schedule',
+    SEND_POST_BY_ID: '/send', /* /:postId/send */
+    DELETE_POST_BY_ID: '/', /* /:postId */
   },
-  MAIL: {
-    MAIL_ROUTER: '/mail',
-    RESET_PASSWORD: '/resetPassword',
-    CONFIRM_ACCOUNT: '/confirm',
+  ADMIN: {
+    ADMIN_ROUTER: '/admin',
+    USERS: '/users',
+    POSTS: '/posts',
+    CHANGE_USER_PASSWORD: '/changeUserPassword',
   },
 };

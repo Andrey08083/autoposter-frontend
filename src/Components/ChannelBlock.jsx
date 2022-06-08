@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 
 const FlexChannelDiv = styled.div`
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;

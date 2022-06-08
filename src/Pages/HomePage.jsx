@@ -14,8 +14,15 @@ function HomePage() {
         The best autoposter in world
         <Link to="/sign-in"><Button>Login</Button></Link>
         <Link to="/sign-up"><Button>Register</Button></Link>
+        {state?.userStorage?.user?.role === 'Admin'
+          && <Link to="/admin"><Button>Go to Admin Panel</Button></Link>}
         {!!Object.keys(state?.userStorage?.user || {}).length
-          && <Link to="/workspace"><Button>Go to Workspace</Button></Link>}
+          && (
+          <>
+            <Link to="/workspace"><Button>Go to Workspace</Button></Link>
+            <Link to="/logout"><Button>Logout</Button></Link>
+          </>
+          )}
       </FlexColumnDiv>
     </FlexColumnDiv100>
   );

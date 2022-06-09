@@ -11,7 +11,7 @@ function HomePage() {
   return (
     <FlexColumnDiv100>
       <FlexColumnDiv>
-        The best autoposter in world
+        The best autoposter in the world
         <Link to="/sign-in"><Button>Login</Button></Link>
         <Link to="/sign-up"><Button>Register</Button></Link>
         {state?.userStorage?.user?.role === 'Admin'

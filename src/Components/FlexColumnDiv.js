@@ -5,8 +5,11 @@ export default styled.div`
   flex-direction: column;
   gap: 10px;
   justify-content: center;
-  flex-grow: 1;
+  padding: 15px;
   align-items: center;
+  flex-grow: 1;
+  max-width: 1400px;
+  margin: 0 auto;
   text-align: center;
   height: auto;
 `;

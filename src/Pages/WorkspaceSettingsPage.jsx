@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 import { Alert, Button } from '@mui/material';
 
 import FlexColumnDiv100 from '../Components/FlexColumnDiv100';
 import ResponsiveAppBar from '../Components/ResponsiveAppBar';
-import FlexColumnDiv from '../Components/FlexColumnDiv';
 import {
   getTelegramChannelsByUserId,
   getTelegramConnectToken,
   removeTelegramChannel,
 } from '../API/WorkspaceApi';
 import ChannelBlock from '../Components/ChannelBlock';
+
+const ChannelsDiv = styled.div`
+  display: grid;
+  gap: 15px;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0 15px;
+`;
 
 function WorkspaceSettingsPage() {
   const [channels, setChannels] = useState([]);
@@ -50,16 +57,16 @@ function WorkspaceSettingsPage() {
             : 'Some error occurred'}
         </Alert>
         )}
-      <FlexColumnDiv>
-        Connected channels:
+      Connected channels:
+      <ChannelsDiv>
         {channels.map((channel) => (
           <ChannelBlock
-            button={channel}
+            channel={channel}
             onRemoveClick={onChannelRemoveClickHandler}
           />
         ))}
-        <Button onClick={handleTelegramAccountConnect}>Connect telegram account</Button>
-      </FlexColumnDiv>
+      </ChannelsDiv>
+      <Button onClick={handleTelegramAccountConnect}>Connect telegram account</Button>
     </FlexColumnDiv100>
   );
 }

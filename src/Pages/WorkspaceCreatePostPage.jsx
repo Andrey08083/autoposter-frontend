@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
@@ -14,7 +15,6 @@ import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import FlexColumnDiv100 from '../Components/FlexColumnDiv100';
 import ResponsiveAppBar from '../Components/ResponsiveAppBar';
-import FlexColumnDiv from '../Components/FlexColumnDiv';
 import {
   getTelegramChannelsByUserId,
   sendTelegramPostToSelectedChannel,
@@ -26,6 +26,32 @@ import AddButtonDialog from '../Components/AddButtonDialog';
 import FlexRowDiv from '../Components/FlexRowDiv';
 
 dayjs.extend(utc);
+
+const MenuItemDiv = styled.div`
+  display: grid;
+  column-gap: 15px;
+  align-items: center;
+  grid-template-columns: 50px 1fr;
+`;
+
+const ChannelImg = styled.img`
+  width: 100%;
+  border-radius: 50%;
+`;
+
+const CreatePageDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  padding: 15px 15px;
+  align-items: flex-start;
+  flex-grow: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+  height: auto;
+`;
 
 const transformDateToUtcTimeStamp = (dayJsObject) => (
   dayjs(dayJsObject)
@@ -147,7 +173,7 @@ function WorkspaceCreatePostPage() {
         >{alertContent}
         </Alert>
         )}
-      <FlexColumnDiv>
+      <CreatePageDiv>
         <Editor
           apiKey={process.env.REACT_APP_TINYMCE_API_KEY}
           initialValue="Write your text here..."
@@ -188,7 +214,7 @@ function WorkspaceCreatePostPage() {
           onClose={handleCloseDialog}
           onAdd={handleAddButton}
         />
-        <div>
+        <FlexRowDiv>
           {buttons.map((button, index) => (
             <ButtonBlock
               id={index}
@@ -196,36 +222,40 @@ function WorkspaceCreatePostPage() {
               onRemoveClick={handleRemoveButton}
             />
           ))}
-        </div>
-        <FlexRowDiv>
-          <p>Select Telegram channel from dropdown:</p>
-          <Select
-            defaultValue=""
-            onChange={handleTextChange(setSelectedChannelId)}
-          >
-            {channels.map((channel) => <MenuItem value={channel.id}>{channel.title}</MenuItem>)}
-          </Select>
         </FlexRowDiv>
+        Select Telegram channel from dropdown:
+        <Select
+          defaultValue="0"
+          onChange={handleTextChange(setSelectedChannelId)}
+        >
+          <MenuItem value={0}>Select something</MenuItem>
+          {channels.map((channel) => (
+            <MenuItem value={channel.id}>
+              <MenuItemDiv>
+                <ChannelImg src={`data:image/png;base64, ${channel.photo}`} />
+                <span>{channel.title}</span>
+              </MenuItemDiv>
+            </MenuItem>
+          ))}
+        </Select>
 
-        <FlexRowDiv>
-          <p>Set date for post:</p>
-          <LocalizationProvider
-            dateAdapter={AdapterDayjs}
-          >
-            <DateTimePicker
-              value={dateAndTime}
-              onChange={setDateAndTime}
-              renderInput={(props) => <TextField {...props} />}
-            />
-          </LocalizationProvider>
-        </FlexRowDiv>
+        Set date for post:
+        <LocalizationProvider
+          dateAdapter={AdapterDayjs}
+        >
+          <DateTimePicker
+            value={dateAndTime}
+            onChange={setDateAndTime}
+            renderInput={(props) => <TextField {...props} />}
+          />
+        </LocalizationProvider>
 
-        <FlexRowDiv>
-          <Button onClick={handlePostSending}>Post in selected channel</Button>
+        <FlexRowDiv style={{ alignSelf: 'center' }}>
+          <Button variant="contained" onClick={handlePostSchedule}>Schedule</Button>
           <p>or</p>
-          <Button onClick={handlePostSchedule}>Schedule in selected channel</Button>
+          <Button variant="outlined" onClick={handlePostSending}>Post now</Button>
         </FlexRowDiv>
-      </FlexColumnDiv>
+      </CreatePageDiv>
     </FlexColumnDiv100>
   );
 }

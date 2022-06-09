@@ -15,6 +15,7 @@ function LoginPage() {
   const [registerErrors, setRegisterErrors] = useState(undefined);
   return (
     <FlexColumnDiv100>
+      <Link to="/"><Button>Go back</Button></Link>
       <FlexColumnDiv>
         <TextField label="Username" type="text" value={userName} onChange={handleTextChange(setUserName)} />
         <TextField label="Email" type="email" value={email} onChange={handleTextChange(setEmail)} />

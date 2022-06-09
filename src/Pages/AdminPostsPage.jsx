@@ -2,9 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { Button } from '@mui/material';
+import styled from '@emotion/styled';
 import FlexColumnDiv from '../Components/FlexColumnDiv';
 import { getTelegramPostsByUserId } from '../API/AdminApi';
 import PostBlock from '../Components/PostBlock';
+import FlexColumnDiv100 from '../Components/FlexColumnDiv100';
+
+const PostsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 600px;
+  padding: 15px;
+  gap: 15px;
+  margin: 0 auto;
+`;
 
 function AdminPostsPage() {
   const { userId } = useParams();
@@ -19,13 +30,17 @@ function AdminPostsPage() {
   const deletePostById = (postId) => setPosts(posts.filter((post) => post._id !== postId));
 
   return (
-    <FlexColumnDiv>
+    <FlexColumnDiv100>
       <Link to="/admin"><Button>Go back</Button></Link>
-      Posts:
       <FlexColumnDiv>
-        {posts.map((post) => <PostBlock onDelete={deletePostById} post={post} />)}
+        Posts:
+        <PostsDiv>
+          {posts.map((post) => (
+            <PostBlock onDelete={deletePostById} post={post} />
+          ))}
+        </PostsDiv>
       </FlexColumnDiv>
-    </FlexColumnDiv>
+    </FlexColumnDiv100>
   );
 }
 

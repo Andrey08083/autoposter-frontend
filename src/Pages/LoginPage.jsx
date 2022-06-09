@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextField } from '@mui/material';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import FlexColumnDiv from '../Components/FlexColumnDiv';
 import FlexColumnDiv100 from '../Components/FlexColumnDiv100';
 import { handleTextChange } from '../Utils/HookChangeHandlers';
@@ -15,7 +15,9 @@ function LoginPage() {
   const [loginErrors, setLoginErrors] = useState(undefined);
   return (
     <FlexColumnDiv100>
+      <Link to="/"><Button>Go back</Button></Link>
       <FlexColumnDiv>
+        <p>Authorization</p>
         <TextField label="Email" type="Email" value={email} onChange={handleTextChange(setEmail)} />
         <TextField label="Password" type="password" value={password} onChange={handleTextChange(setPassword)} />
         <Button

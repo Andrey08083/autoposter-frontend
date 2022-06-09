@@ -3,15 +3,33 @@ import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import ChangePasswordDialog from './ChangePasswordDialog';
+import FlexRowDiv from './FlexRowDiv';
 
 const FlexUserDiv = styled.div`
-  padding: 20px;
+  min-width: 30%;
+  padding: 15px;
   display: flex;
+  gap: 15px;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border: 1px solid rgb(0, 0, 0);
+  justify-content: stretch;
+  align-items: stretch;
+  text-align: left;
+  background-color: #F1F1F1;
+  border-radius: 15px;
+  border: 1px solid #e7e7e7;
+`;
+
+const UserImg = styled.img`
+  width: 50px;
+  border-radius: 50%;
+`;
+
+const TextSpan = styled.span`
+  color: #969696;
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
 `;
 
 function UserBlock({ user }) {
@@ -26,12 +44,17 @@ function UserBlock({ user }) {
   };
   return (
     <FlexUserDiv>
-      <p>ID: {user._id}</p>
-      <p>Email: {user.email}</p>
-      <p>Username: {user.userName}</p>
+      <FlexRowDiv>
+        <UserImg src={`data:image/png;base64, ${user.photo}`} />
+        <span><strong>{user.email}</strong></span>
+      </FlexRowDiv>
+      <span><TextSpan>ID:</TextSpan> {user._id}</span>
+      <span><TextSpan>Username:</TextSpan> {user.userName}</span>
 
-      <Link to={`/admin/${user._id}/posts`}><Button>View posts</Button></Link>
-      <Button onClick={handleOpenDialog}>Change password</Button>
+      <Link to={`/admin/${user._id}/posts`}>
+        <StyledButton variant="contained">View posts</StyledButton>
+      </Link>
+      <StyledButton onClick={handleOpenDialog} variant="outlined">Change password</StyledButton>
       <ChangePasswordDialog
         open={open}
         user={user}

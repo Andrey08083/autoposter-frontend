@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import FlexColumnDiv from '../Components/FlexColumnDiv';
+import styled from '@emotion/styled';
 import FlexColumnDiv100 from '../Components/FlexColumnDiv100';
 import ResponsiveAppBar from '../Components/ResponsiveAppBar';
 import { getTelegramPosts } from '../API/WorkspaceApi';
 import PostBlock from '../Components/PostBlock';
+
+const PostsDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-width: 600px;
+  padding: 15px;
+  gap: 15px;
+  margin: 0 auto;
+`;
 
 function WorkspacePostsPage() {
   const [posts, setPosts] = useState([]);
@@ -17,11 +26,11 @@ function WorkspacePostsPage() {
   return (
     <FlexColumnDiv100>
       <ResponsiveAppBar />
-      <FlexColumnDiv>
+      <PostsDiv>
         {posts.map((post) => (
           <PostBlock onDelete={deletePostById} post={post} />
         ))}
-      </FlexColumnDiv>
+      </PostsDiv>
     </FlexColumnDiv100>
   );
 }
